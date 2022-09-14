@@ -30,8 +30,8 @@ func (h *Hook) AfterConnect(ctx context.Context, dc driver.Conn, err error) (con
 	return ctx, dc, err
 }
 
-func (h *Hook) BeforeExecContext(ctx context.Context, query string, args []driver.NamedValue, err error) (context.Context, string, []driver.NamedValue, error) {
-	ctx, err = h.allow(ctx)
+func (h *Hook) BeforeExecContext(ctx context.Context, query string, args []driver.NamedValue, _ error) (context.Context, string, []driver.NamedValue, error) {
+	ctx, err := h.allow(ctx)
 
 	return ctx, query, args, err
 }
@@ -42,8 +42,8 @@ func (h *Hook) AfterExecContext(ctx context.Context, _ string, _ []driver.NamedV
 	return ctx, dr, err
 }
 
-func (h *Hook) BeforeBeginTx(ctx context.Context, opts driver.TxOptions, err error) (context.Context, driver.TxOptions, error) {
-	ctx, err = h.allow(ctx)
+func (h *Hook) BeforeBeginTx(ctx context.Context, opts driver.TxOptions, _ error) (context.Context, driver.TxOptions, error) {
+	ctx, err := h.allow(ctx)
 
 	return ctx, opts, err
 }
@@ -54,8 +54,8 @@ func (h *Hook) AfterBeginTx(ctx context.Context, _ driver.TxOptions, dt driver.T
 	return ctx, dt, err
 }
 
-func (h *Hook) BeforeQueryContext(ctx context.Context, query string, args []driver.NamedValue, err error) (context.Context, string, []driver.NamedValue, error) {
-	ctx, err = h.allow(ctx)
+func (h *Hook) BeforeQueryContext(ctx context.Context, query string, args []driver.NamedValue, _ error) (context.Context, string, []driver.NamedValue, error) {
+	ctx, err := h.allow(ctx)
 
 	return ctx, query, args, err
 }
@@ -66,8 +66,8 @@ func (h *Hook) AfterQueryContext(ctx context.Context, _ string, _ []driver.Named
 	return ctx, rows, err
 }
 
-func (h *Hook) BeforePrepareContext(ctx context.Context, query string, err error) (context.Context, string, error) {
-	ctx, err = h.allow(ctx)
+func (h *Hook) BeforePrepareContext(ctx context.Context, query string, _ error) (context.Context, string, error) {
+	ctx, err := h.allow(ctx)
 
 	return ctx, query, err
 }
@@ -94,8 +94,8 @@ func (h *Hook) AfterRollback(ctx context.Context, err error) (context.Context, e
 	return ctx, err
 }
 
-func (h *Hook) BeforeStmtQueryContext(ctx context.Context, _ string, args []driver.NamedValue, err error) (context.Context, []driver.NamedValue, error) {
-	ctx, err = h.allow(ctx)
+func (h *Hook) BeforeStmtQueryContext(ctx context.Context, _ string, args []driver.NamedValue, _ error) (context.Context, []driver.NamedValue, error) {
+	ctx, err := h.allow(ctx)
 
 	return ctx, args, err
 }
@@ -106,8 +106,8 @@ func (h *Hook) AfterStmtQueryContext(ctx context.Context, _ string, _ []driver.N
 	return ctx, rows, err
 }
 
-func (h *Hook) BeforeStmtExecContext(ctx context.Context, _ string, args []driver.NamedValue, err error) (context.Context, []driver.NamedValue, error) {
-	ctx, err = h.allow(ctx)
+func (h *Hook) BeforeStmtExecContext(ctx context.Context, _ string, args []driver.NamedValue, _ error) (context.Context, []driver.NamedValue, error) {
+	ctx, err := h.allow(ctx)
 
 	return ctx, args, err
 }
