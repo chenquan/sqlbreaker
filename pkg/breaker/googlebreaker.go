@@ -60,32 +60,6 @@ func (b *googleBreaker) allow() (internalPromise, error) {
 	}, nil
 }
 
-func (b *googleBreaker) doReq(req func() error, fallback func(err error) error, acceptable Acceptable) error {
-	if err := b.accept(); err != nil {
-		if fallback != nil {
-			return fallback(err)
-		}
-
-		return err
-	}
-
-	defer func() {
-		if e := recover(); e != nil {
-			b.markFailure()
-			panic(e)
-		}
-	}()
-
-	err := req()
-	if acceptable(err) {
-		b.markSuccess()
-	} else {
-		b.markFailure()
-	}
-
-	return err
-}
-
 func (b *googleBreaker) markSuccess() {
 	b.stat.Add(1)
 }
