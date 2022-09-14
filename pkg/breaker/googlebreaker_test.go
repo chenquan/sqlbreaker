@@ -1,7 +1,6 @@
 package breaker
 
 import (
-	"errors"
 	"fmt"
 	"math/rand"
 	"testing"
@@ -56,61 +55,6 @@ func TestGoogleBreakerOpen(t *testing.T) {
 	time.Sleep(testInterval * 2)
 	verify(t, func() bool {
 		return b.accept() != nil
-	})
-}
-
-func TestGoogleBreakerFallback(t *testing.T) {
-	b := getGoogleBreaker()
-	markSuccess(b, 1)
-	assert.Nil(t, b.accept())
-	markFailed(b, 10000)
-	time.Sleep(testInterval * 2)
-	verify(t, func() bool {
-		return b.doReq(func() error {
-			return errors.New("any")
-		}, func(err error) error {
-			return nil
-		}, defaultAcceptable) == nil
-	})
-}
-
-func TestGoogleBreakerReject(t *testing.T) {
-	b := getGoogleBreaker()
-	markSuccess(b, 100)
-	assert.Nil(t, b.accept())
-	markFailed(b, 10000)
-	time.Sleep(testInterval)
-	assert.Equal(t, ErrServiceUnavailable, b.doReq(func() error {
-		return ErrServiceUnavailable
-	}, nil, defaultAcceptable))
-}
-
-func TestGoogleBreakerAcceptable(t *testing.T) {
-	b := getGoogleBreaker()
-	errAcceptable := errors.New("any")
-	assert.Equal(t, errAcceptable, b.doReq(func() error {
-		return errAcceptable
-	}, nil, func(err error) bool {
-		return err == errAcceptable
-	}))
-}
-
-func TestGoogleBreakerNotAcceptable(t *testing.T) {
-	b := getGoogleBreaker()
-	errAcceptable := errors.New("any")
-	assert.Equal(t, errAcceptable, b.doReq(func() error {
-		return errAcceptable
-	}, nil, func(err error) bool {
-		return err != errAcceptable
-	}))
-}
-
-func TestGoogleBreakerPanic(t *testing.T) {
-	b := getGoogleBreaker()
-	assert.Panics(t, func() {
-		_ = b.doReq(func() error {
-			panic("fail")
-		}, nil, defaultAcceptable)
 	})
 }
 

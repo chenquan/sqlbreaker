@@ -56,12 +56,10 @@ type (
 
 	internalThrottle interface {
 		allow() (internalPromise, error)
-		doReq(req func() error, fallback func(err error) error, acceptable Acceptable) error
 	}
 
 	throttle interface {
 		allow() (Promise, error)
-		doReq(req func() error, fallback func(err error) error, acceptable Acceptable) error
 	}
 )
 
@@ -120,16 +118,6 @@ func (lt loggedThrottle) allow() (Promise, error) {
 		promise: promise,
 		errWin:  lt.errWin,
 	}, err
-}
-
-func (lt loggedThrottle) doReq(req func() error, fallback func(err error) error, acceptable Acceptable) error {
-	return lt.internalThrottle.doReq(req, fallback, func(err error) bool {
-		accept := acceptable(err)
-		if !accept && err != nil {
-			lt.errWin.add(err.Error())
-		}
-		return accept
-	})
 }
 
 type errorWindow struct {
