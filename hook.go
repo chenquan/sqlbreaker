@@ -36,7 +36,7 @@ func (h *Hook) BeforeExecContext(ctx context.Context, query string, args []drive
 	return ctx, query, args, err
 }
 
-func (h *Hook) AfterExecContext(ctx context.Context, query string, args []driver.NamedValue, dr driver.Result, err error) (context.Context, driver.Result, error) {
+func (h *Hook) AfterExecContext(ctx context.Context, _ string, _ []driver.NamedValue, dr driver.Result, err error) (context.Context, driver.Result, error) {
 	h.handleAllow(ctx, err)
 
 	return ctx, dr, err
@@ -48,7 +48,7 @@ func (h *Hook) BeforeBeginTx(ctx context.Context, opts driver.TxOptions, err err
 	return ctx, opts, err
 }
 
-func (h *Hook) AfterBeginTx(ctx context.Context, opts driver.TxOptions, dt driver.Tx, err error) (context.Context, driver.Tx, error) {
+func (h *Hook) AfterBeginTx(ctx context.Context, _ driver.TxOptions, dt driver.Tx, err error) (context.Context, driver.Tx, error) {
 	h.handleAllow(ctx, err)
 
 	return ctx, dt, err
@@ -60,7 +60,7 @@ func (h *Hook) BeforeQueryContext(ctx context.Context, query string, args []driv
 	return ctx, query, args, err
 }
 
-func (h *Hook) AfterQueryContext(ctx context.Context, query string, args []driver.NamedValue, rows driver.Rows, err error) (context.Context, driver.Rows, error) {
+func (h *Hook) AfterQueryContext(ctx context.Context, _ string, _ []driver.NamedValue, rows driver.Rows, err error) (context.Context, driver.Rows, error) {
 	h.handleAllow(ctx, err)
 
 	return ctx, rows, err
@@ -72,7 +72,7 @@ func (h *Hook) BeforePrepareContext(ctx context.Context, query string, err error
 	return ctx, query, err
 }
 
-func (h *Hook) AfterPrepareContext(ctx context.Context, query string, ds driver.Stmt, err error) (context.Context, driver.Stmt, error) {
+func (h *Hook) AfterPrepareContext(ctx context.Context, _ string, ds driver.Stmt, err error) (context.Context, driver.Stmt, error) {
 	h.handleAllow(ctx, err)
 
 	return ctx, ds, err
@@ -94,25 +94,25 @@ func (h *Hook) AfterRollback(ctx context.Context, err error) (context.Context, e
 	return ctx, err
 }
 
-func (h *Hook) BeforeStmtQueryContext(ctx context.Context, query string, args []driver.NamedValue, err error) (context.Context, []driver.NamedValue, error) {
+func (h *Hook) BeforeStmtQueryContext(ctx context.Context, _ string, args []driver.NamedValue, err error) (context.Context, []driver.NamedValue, error) {
 	ctx, err = h.allow(ctx)
 
 	return ctx, args, err
 }
 
-func (h *Hook) AfterStmtQueryContext(ctx context.Context, query string, args []driver.NamedValue, rows driver.Rows, err error) (context.Context, driver.Rows, error) {
+func (h *Hook) AfterStmtQueryContext(ctx context.Context, _ string, _ []driver.NamedValue, rows driver.Rows, err error) (context.Context, driver.Rows, error) {
 	h.handleAllow(ctx, err)
 
 	return ctx, rows, err
 }
 
-func (h *Hook) BeforeStmtExecContext(ctx context.Context, query string, args []driver.NamedValue, err error) (context.Context, []driver.NamedValue, error) {
+func (h *Hook) BeforeStmtExecContext(ctx context.Context, _ string, args []driver.NamedValue, err error) (context.Context, []driver.NamedValue, error) {
 	ctx, err = h.allow(ctx)
 
 	return ctx, args, err
 }
 
-func (h *Hook) AfterStmtExecContext(ctx context.Context, query string, args []driver.NamedValue, r driver.Result, err error) (context.Context, driver.Result, error) {
+func (h *Hook) AfterStmtExecContext(ctx context.Context, _ string, _ []driver.NamedValue, r driver.Result, err error) (context.Context, driver.Result, error) {
 	h.handleAllow(ctx, err)
 
 	return ctx, r, err

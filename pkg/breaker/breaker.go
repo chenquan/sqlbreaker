@@ -94,10 +94,6 @@ func WithName(name string) Option {
 	}
 }
 
-func defaultAcceptable(err error) bool {
-	return err == nil
-}
-
 type loggedThrottle struct {
 	name string
 	internalThrottle
