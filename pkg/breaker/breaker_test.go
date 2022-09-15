@@ -9,10 +9,32 @@ import (
 )
 
 func TestCircuitBreaker_Allow(t *testing.T) {
-	b := NewBreaker()
-	assert.True(t, len(b.Name()) > 0)
-	_, err := b.Allow()
-	assert.Nil(t, err)
+	t.Run("allow", func(t *testing.T) {
+		b := NewBreaker(WithName("any"))
+		assert.True(t, len(b.Name()) > 0)
+		for i := 0; i < 1000; i++ {
+			allow, err := b.Allow()
+			assert.Nil(t, err)
+			allow.Accept()
+		}
+	})
+
+	t.Run("not allowed", func(t *testing.T) {
+		b := NewBreaker()
+		assert.True(t, len(b.Name()) > 0)
+		openBreaker := false
+		for i := 0; i < 1000; i++ {
+			allow, err := b.Allow()
+			if err == ErrServiceUnavailable {
+				openBreaker = true
+			} else {
+				allow.Reject("any")
+				assert.Nil(t, err)
+			}
+		}
+
+		assert.True(t, openBreaker)
+	})
 }
 
 func TestErrorWindow(t *testing.T) {
