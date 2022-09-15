@@ -1,5 +1,12 @@
 # sqlbreaker
 
+[![Godoc](https://img.shields.io/badge/godoc-reference-brightgreen)](https://pkg.go.dev/github.com/chenquan/sqlbreaker)
+[![Go Report Card](https://goreportcard.com/badge/github.com/chenquan/sqlbreaker)](https://goreportcard.com/report/github.com/chenquan/sqlbreaker)
+[![Release](https://img.shields.io/github/v/release/chenquan/sqlbreaker.svg?style=flat-square)](https://github.com/chenquan/sqlbreaker)
+[![codecov](https://codecov.io/gh/chenquan/sqlbreaker/branch/master/graph/badge.svg?token=74phc5KVI7)](https://codecov.io/gh/chenquan/sqlbreaker)
+[![Download](https://goproxy.cn/stats/github.com/chenquan/sqlbreaker/badges/download-count.svg)](https://github.com/chenquan/sqlbreaker)
+[![GitHub](https://img.shields.io/github/license/chenquan/sqlbreaker)](https://github.com/chenquan/sqlbreaker/blob/master/LICENSE)
+
 A low-code intrusion SQL breaker library, suitable for any relational database (Sqlite3, MySQL, Oracle, SQL Server,
 PostgreSQL, TiDB, etc.) and ORM libraries for various relational database (gorm, xorm, sqlx, etc.)
 
