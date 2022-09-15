@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"database/sql/driver"
+	"errors"
 
 	"github.com/chenquan/sqlbreaker/pkg/breaker"
 	"github.com/chenquan/sqlplus"
@@ -123,30 +124,22 @@ func (h *Hook) allow(ctx context.Context) (context.Context, error) {
 	if err != nil {
 		return ctx, err
 	}
-	ctx = newContextWithAllow(ctx, allow)
+	ctx = context.WithValue(ctx, allowKey{}, allow)
 
-	return ctx, nil
+	return ctx, err
 }
 
 func (h *Hook) handleAllow(ctx context.Context, err error) {
-	allow := allowFromContext(ctx)
-	if err == nil || sql.ErrNoRows == err {
+	value := ctx.Value(allowKey{})
+	if value == nil {
+		return
+	}
+
+	allow := value.(breaker.Promise)
+	if err == nil || errors.Is(err, sql.ErrNoRows) {
 		allow.Accept()
 		return
 	}
 
 	allow.Reject(err.Error())
-}
-
-func newContextWithAllow(ctx context.Context, allow breaker.Promise) context.Context {
-	return context.WithValue(ctx, allowKey{}, allow)
-}
-
-func allowFromContext(ctx context.Context) (allow breaker.Promise) {
-	value := ctx.Value(allowKey{})
-	if value != nil {
-		return &breaker.NopPromise{}
-	}
-
-	return value.(breaker.Promise)
 }

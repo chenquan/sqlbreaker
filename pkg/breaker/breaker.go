@@ -110,6 +110,10 @@ func newLoggedThrottle(name string, t internalThrottle) loggedThrottle {
 
 func (lt loggedThrottle) allow() (Promise, error) {
 	promise, err := lt.internalThrottle.allow()
+	if err != nil {
+		return nil, err
+	}
+
 	return promiseWithReason{
 		promise: promise,
 		errWin:  lt.errWin,
