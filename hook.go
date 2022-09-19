@@ -23,6 +23,14 @@ func NewBreakerHook(brk breaker.Breaker) *Hook {
 	return &Hook{brk: brk}
 }
 
+func (h *Hook) BeforeClose(ctx context.Context, err error) (context.Context, error) {
+	return ctx, err
+}
+
+func (h *Hook) AfterClose(ctx context.Context, err error) (context.Context, error) {
+	return ctx, err
+}
+
 func (h *Hook) BeforeConnect(ctx context.Context, err error) (context.Context, error) {
 	return ctx, err
 }
