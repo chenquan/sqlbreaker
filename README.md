@@ -8,7 +8,7 @@
 [![GitHub](https://img.shields.io/github/license/chenquan/sqlbreaker)](https://github.com/chenquan/sqlbreaker/blob/master/LICENSE)
 
 A low-code intrusion library that provides SQL breaker capabilities, suitable for any relational database (Sqlite3, MySQL, Oracle, SQL Server,
-PostgreSQL, TiDB, etc.) and ORM libraries for various relational database (gorm, xorm, sqlx, etc.)
+PostgreSQL, TiDB, TDengine, etc.) and ORM libraries for various relational database (gorm, xorm, sqlx, etc.)
 
 # 😜installation
 
@@ -102,6 +102,6 @@ If you like or are using this project to learn or start your solution, please gi
 # 👐ecosystem
 
 - [sqltrace](https://github.com/chenquan/sqltrace):A low-code intrusion library that provides SQL tracing capabilities, suitable for any
-  relational database (Sqlite3, MySQL, Oracle, SQL Server, PostgreSQL, TiDB, etc.) and ORM libraries for various
+  relational database (Sqlite3, MySQL, Oracle, SQL Server, PostgreSQL, TiDB, TDengine, etc.) and ORM libraries for various
   relational database (gorm, xorm, sqlx, etc.)
 - [sqlplus](https://github.com/chenquan/sqlplus): A sql enhancement tool library based on `database/sql/driver`
