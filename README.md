@@ -10,6 +10,8 @@
 A low-code intrusion library that provides SQL breaker capabilities, suitable for any relational database (Sqlite3, MySQL, Oracle, SQL Server,
 PostgreSQL, TiDB, TDengine, etc.) and ORM libraries for various relational database (gorm, xorm, sqlx, etc.)
 
+> Unstable, use with caution in production environment
+
 # 😜installation
 
 ```shell
